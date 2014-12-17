@@ -1,0 +1,161 @@
+  <?php $_product = $this->getProduct(); ?>
+<div id="popupsubmit_form" style="display:none;">
+
+  <div id="submit_form">
+    <div class="form-top">
+      <span class="title"><?php echo $this->__("Product Inquiry")?></span>
+    </div>
+    <form class="form-maker" name="quote_form" id="quote_form" onsubmit="return false;">
+      <div class="fieldset fieldset-4">
+      <ul class="form-list">
+        <li class="fields">
+          <div class="field form-field-name">
+            <label for="field_18" class="label-name">
+               <?php echo $this->__('Your Name:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-name">
+            
+            <input type="text" name="name" id="name" class="input-text required-entry" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-email">
+            <label for="field_18" class="label-email">
+               <?php echo $this->__('Your Email:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-email">
+            <input type="text" name="email" id="email" class="input-text required-entry validate-email" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-org">
+            <label for="field_18" class="label-org">
+               <?php echo $this->__('Organization:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-org"> 
+            <input type="text" name="organization" id="organization" class="input-text" style="" value="">
+          </div>
+        </li>
+         <li class="fields">
+          <div class="field form-field-phone">
+            <label for="field_18" class="label-phone">
+               <?php echo $this->__('Phone:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-phone"> 
+            <input type="text" name="phone" id="phone" class="input-text" style="" value="">
+          </div>
+        </li>
+         <li class="fields">
+          <div class="field form-field-fax">
+            <label for="field_18" class="label-fax">
+               <?php echo $this->__('Fax:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-fax"> 
+            <input type="text" name="fax" id="fax" class="input-text" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-subject">
+            <label for="field_18" class="label-subject">
+               <?php echo $this->__('Subject:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-subject"> 
+            <input type="text" name="subject" id="subject" class="input-text" style="" value="<?php echo $_product->getBulkQuoteSubject(); ?>">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-size">
+            <label for="field_18" class="label-size">
+               <?php echo $this->__('Size:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-size"> 
+            <input type="text" name="size" id="size" class="input-text" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-subject">
+            <label for="field_18" class="label-subject">
+               <?php echo $this->__('Message:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-mesage"> 
+            <textarea name="message" id="message" class="input-text required-entry"></textarea>
+          </div>
+        </li>
+      </ul>
+    </div>
+      <div class="buttons-set">
+      <p class="required">
+        <?php echo $this->__('* For quote inquiries, please specify a size'); ?>
+      </p>
+      <input type="submit" title="Send" value="Send" class="send button"/>
+       <input type="reset" title="Reset" value="Reset" class="button"/>
+    </div>
+    <input type="hidden" value="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>" class="formurl"/>
+    </form>
+  </div>
+   <script type="text/javascript">
+    //< ![CDATA[
+        var customForm = new VarienForm('quote_form');
+    //]]>
+   </script>
+  <!--  <script type="text/javascript">
+  // //<![CDATA[
+  //  var contactForm = new VarienForm('quote_form', true);
+  // //]]>
+   </script>-->
+<div id="success_message" style="display:none;">
+   <div id="sccs_mssg">
+    <p><?php echo $this->__('Your inquiry has been sent'); ?></p>
+     <p><a href="javascript:void(0)" onclick="displayquoteform();" class="send-more-msg" title="<?php echo $this->__('Send another message.'); ?>"><?php echo $this->__('Send another message.'); ?></a></p>
+     <p><a href="javascript:void(0)" onclick="jQuery.fancybox.close();" title="<?php echo $this->__('Close'); ?>"><?php echo $this->__('Close.'); ?></a></p>
+   </div>
+ </div>
+
+<script type="text/javascript">
+jQuery('form').on('submit', function (e) {
+  var url = jQuery('.formurl').val();
+      url = url+'quotepopup/index/save';
+
+  var formData = jQuery('form').serialize();
+  //alert(formData);exit;
+    jQuery.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+      cache: false,
+      success: function(html) {
+         //jQuery.fancybox.close();
+         //jQuery('.send-more-msg').trigger('click');
+         beginNewsletterForm();
+      }
+    });
+});
+function beginNewsletterForm (){
+//jQuery('.send-more-msg').click(function(){
+      //parent.jQuery.fancybox.close();
+      var formdata  =jQuery('#success_message').html();
+        jQuery.fancybox({
+            'autoScale': false,
+            //'type': 'inline',
+            'content': formdata,
+            'width': 500,
+            'height': 100,
+            'fitToView' : false,
+            'autoDimensions':false,
+            'autoSize' : false,
+            'onComplete': function() {
+                jQuery("#fancybox-wrap").css({'top':'30px', 'bottom':'auto'});
+               }
+        });
+    //});
+}
+</script>
+</div>

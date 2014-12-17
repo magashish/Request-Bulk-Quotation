@@ -1,0 +1,27 @@
+<div class="bulk_request_quote">
+    <button class="showpopup button" onclick="return false;" title="Request Bulk Quotation">Request Bulk Quotation</button>
+</div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    jQuery('.showpopup').click(function(){
+       displayquoteform();
+    });
+  });
+
+  function displayquoteform(){
+   var formdata  =jQuery('#popupsubmit_form').html();
+        jQuery.fancybox({
+            'autoScale': false,
+            'content': formdata,
+            'width': 600,
+            'height': 600,
+            'fitToView' : false,
+            'autoDimensions':false,
+            'autoSize' : false,
+            'onComplete': function() {
+                jQuery("#fancybox-wrap").css({'top':'30px', 'bottom':'auto'});
+               }
+        });
+  }
+</script>

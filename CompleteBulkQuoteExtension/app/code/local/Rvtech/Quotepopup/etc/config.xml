@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Rvtech_Quotepopup>
+            <version>0.1.0</version>
+        </Rvtech_Quotepopup>
+    </modules>
+    <frontend>
+        <routers>
+            <quotepopup>
+                <use>standard</use>
+                <args>
+                    <module>Rvtech_Quotepopup</module>
+                    <frontName>quotepopup</frontName>
+                </args>
+            </quotepopup>
+        </routers>
+        <layout>
+            <updates>
+                <quotepopup>
+                    <file>quotepopup.xml</file>
+                </quotepopup>
+            </updates>
+        </layout>
+    </frontend>   
+	<global>
+        <blocks>
+            <quotepopup>
+                <class>Rvtech_Quotepopup_Block</class>
+            </quotepopup>
+        </blocks>
+        <helpers>
+            <quotepopup>
+                <class>Rvtech_Quotepopup_Helper</class>
+            </quotepopup>
+        </helpers>
+        <template>
+        <email>
+            <quotepopup_email_template translate="label" module="quotepopup">
+                <label>Bulk Quote Email</label>
+                <file>quotepopup_email_template.html</file>
+                <type>html</type>
+            </quotepopup_email_template>
+        </email>
+    </template>
+    </global>
+</config>
+
+

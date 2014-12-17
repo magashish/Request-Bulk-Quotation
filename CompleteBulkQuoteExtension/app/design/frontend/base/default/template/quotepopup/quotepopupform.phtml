@@ -1,0 +1,203 @@
+  <?php $_product = $this->getProduct(); ?>
+<div id="popupsubmit_form" style="display:none;">
+
+  <div id="submit_form">
+    <div class="form-top">
+      <span class="title"><?php echo $this->__("Product Inquiry")?></span>
+    </div>
+    <form class="form-maker" onsubmit="return false;">
+      <div class="fieldset fieldset-4">
+      <ul class="form-list">
+        <li class="fields">
+          <div class="field form-field-name">
+            <label for="field_18" class="label-name required"><em>*</em><?php echo $this->__('Your Name:')?></label>
+          </div>
+          <div class="input-box input-box-name">            
+            <input type="text" name="name" class="input-text required-entry" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-email">
+            <label for="field_18" class="label-email required"><em>*</em>
+               <?php echo $this->__('Your Email:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-email">
+            <input type="text" name="email" class="input-text required-entry validate-email" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-org">
+            <label for="field_18" class="label-org required"><em>*</em>
+               <?php echo $this->__('Organization:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-org"> 
+            <input type="text" name="organization" class="input-text required-entry" style="" value="">
+          </div>
+        </li>
+         <li class="fields">
+          <div class="field form-field-phone">
+            <label for="field_18" class="label-phone required"><em>*</em>
+               <?php echo $this->__('Phone:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-phone"> 
+            <input type="text" name="phone" class="input-text required-entry phone-no" style="" value="">
+          </div>
+        </li>
+         <li class="fields">
+          <div class="field form-field-fax">
+            <label for="field_18" class="label-fax">
+               <?php echo $this->__('Fax:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-fax"> 
+            <input type="text" name="fax" class="input-text" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-subject">
+            <label for="field_18" class="label-subject">
+               <?php echo $this->__('Subject:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-subject"> 
+            <input type="text" name="subject" class="input-text" style="" value="Inquiry about product <?php echo $_product->getSku(); ?>">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-size">
+            <label for="field_18" class="label-size required"><em>*</em>
+               <?php echo $this->__('Size:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-size"> 
+            <input type="text" name="size" class="input-text required-entry" style="" value="">
+          </div>
+        </li>
+        <li class="fields">
+          <div class="field form-field-message">
+            <label for="field_18" class="label-message required"><em>*</em>
+               <?php echo $this->__('Message:')?>        
+            </label>
+          </div>
+          <div class="input-box input-box-mesage"> 
+            <textarea name="message" class="input-text required-entry"></textarea>
+          </div>
+        </li>
+      </ul>
+    </div>
+      <div class="buttons-set">
+      <p class="required">
+        <?php echo $this->__('* For quote inquiries, please specify a size'); ?>
+      </p>
+      <input type="submit" title="Send" value="Send" class="send button"/>
+      <input type="reset" title="Reset" value="Reset" class="button"/>
+    </div>
+    <input type="hidden" value="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>" class="formurl"/>
+    </form>
+      <script type="text/javascript">
+    //<![CDATA[
+        var newquote_form = new VarienForm('quote_form');
+    //]]>
+    </script>
+  </div>
+<div id="success_message" style="display:none;">
+   <div id="sccs_mssg">
+    <p><?php echo $this->__('Your inquiry has been sent'); ?></p>
+     <p><a href="javascript:void(0)" onclick="displayquoteform();" class="send-more-msg" title="<?php echo $this->__('Send another message.'); ?>"><?php echo $this->__('Send another message.'); ?></a></p>
+     <p><button onclick="jQuery.fancybox.close();" class="close button" title="<?php echo $this->__('Close'); ?>"><?php echo $this->__('Close'); ?></button></p>
+   </div>
+ </div>
+<script type="text/javascript">
+jQuery('.form-maker').on('submit', function (e) {
+
+  // validate all required fields
+  
+  var flag = true;
+  jQuery('#fancybox-content').find('.required-entry').each(function() {
+     if(jQuery(this).val() == ""){
+      flag = false;
+      jQuery(this).addClass('areq');
+     }else{
+       jQuery(this).removeClass('areq');
+     }
+  })
+  
+//  validate phone no. allow only 10 digits.
+  var phoneno = jQuery('#fancybox-content .phone-no').val();
+  var filterval = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/; 
+  if(phoneno != '') {
+     if(filterval.test(phoneno))  
+    {  
+    jQuery('#fancybox-content .phone-no').removeClass('areq');
+    flag_phone = true; 
+    }  
+    else  
+    {  
+     jQuery('#fancybox-content .phone-no').addClass('areq');
+     flag_phone = false; 
+     alert('Please enter valid phone no.');
+    }  
+  }
+//  validate email address.
+  var emailcheck = jQuery('#fancybox-content .validate-email').val();
+  if(emailcheck != ''){
+
+    if(validateEmail(emailcheck)) {
+     jQuery('#fancybox-content .validate-email').removeClass('areq');
+      flag_email = true; 
+    }else{
+     jQuery('#fancybox-content .validate-email').addClass('areq');
+    flag_email = false; 
+     alert('Please enter valid email address.'); 
+    }
+
+  }
+  if(flag_email && flag_phone ){
+    flag_new = true;
+  }else{
+    flag_new = false;
+  }
+  if(flag_new){
+     var url = jQuery('.formurl').val();
+      url = url+'quotepopup/index/save';
+
+     var formData = jQuery('form').serialize();  
+     jQuery.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+      cache: false,
+      success: function(html) {
+         beginNewsletterForm();
+      }
+    });
+   }
+   
+});
+ function validateEmail(chkemail) {
+  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  if( !emailReg.test( chkemail ) ) {
+    return false;
+  } else {
+    return true;
+  }
+}
+function beginNewsletterForm (){
+      var formdata  =jQuery('#success_message').html();
+        jQuery.fancybox({
+            'autoScale': false,
+            //'type': 'inline',
+            'content': formdata,
+            'width': 500,
+            'height': 150,
+            'fitToView' : false,
+            'autoDimensions':false,
+            'autoSize' : false
+        });
+}
+</script>
+
+</div>
